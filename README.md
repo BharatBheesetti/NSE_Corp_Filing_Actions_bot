@@ -6,10 +6,8 @@ A Python-based bot that automatically downloads corporate filing action data fro
 
 - [Features](#features)
 - [How It Works](#how-it-works)
-- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Environment Variables](#environment-variables)
 - [Scheduling with GitHub Actions](#scheduling-with-github-actions)
 - [Contributing](#contributing)
 - [License](#license)
@@ -42,23 +40,6 @@ A Python-based bot that automatically downloads corporate filing action data fro
    Once downloaded, the CSV files are read, and each row is inserted into a local SQLite database. A timestamp is added to each record.
 4. **Scheduling**  
    You can schedule this script to run daily (e.g., at 5 PM) so you always have the latest corporate filings data.
-
----
-
-## Project Structure
-
-```
-NSE_Corp_Filing_Actions_bot/
-├─ .github/
-│   └─ workflows/
-│       └─ daily.yml            # (Optional) GitHub Actions workflow file
-├─ data/
-│   └─ ...                      # CSV files downloaded here
-├─ main.py                      # Main script (async agent, downloads + DB insertion)
-├─ requirements.txt             # Python dependencies
-├─ .gitignore                   # Ignores sensitive files, logs, etc.
-└─ README.md                    # This file
-```
 
 ---
 
@@ -107,96 +88,10 @@ NSE_Corp_Filing_Actions_bot/
 
 ---
 
-## Environment Variables
-
-To avoid committing secrets to version control, the script references these keys via `os.getenv(...)`:
-
-- `OPENAI_API_KEY`
-- `DEEPSEEK_API_KEY`
-- `GOOGLE_API_KEY`
-
-### Option A: Set them directly in your environment
-
-On Windows:
-```powershell
-$env:OPENAI_API_KEY="sk-..."
-$env:DEEPSEEK_API_KEY="sk-..."
-$env:GOOGLE_API_KEY="AIza..."
-```
-
-On Linux/macOS:
-```bash
-export OPENAI_API_KEY="sk-..."
-export DEEPSEEK_API_KEY="sk-..."
-export GOOGLE_API_KEY="AIza..."
-```
-
-### Option B: Use a `.env` file (for local development)
-
-1. Install [`python-dotenv`](https://pypi.org/project/python-dotenv/) if not already:
-
-   ```bash
-   pip install python-dotenv
-   ```
-
-2. Create a `.env` file (excluded from Git) in the project root:
-
-   ```bash
-   OPENAI_API_KEY=sk-...
-   DEEPSEEK_API_KEY=sk-...
-   GOOGLE_API_KEY=AIza...
-   ```
-
-3. In `main.py`, uncomment the relevant lines:
-
-   ```python
-   from dotenv import load_dotenv
-   load_dotenv()
-   ```
-
----
 
 ## Scheduling with GitHub Actions
 
-To schedule the script to run daily on GitHub Actions:
-
-1. Create a file at `.github/workflows/daily.yml`:
-
-   ```yaml
-   name: Daily NSE Corporate Actions
-
-   on:
-     schedule:
-       - cron: '0 17 * * *'   # 17:00 UTC daily
-     workflow_dispatch:       # allows manual triggers
-
-   jobs:
-     build:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v3
-
-         - name: Set up Python
-           uses: actions/setup-python@v4
-           with:
-             python-version: '3.10'
-
-         - name: Install dependencies
-           run: |
-             pip install --upgrade pip
-             pip install -r requirements.txt
-
-         - name: Run script
-           env:
-             OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-             DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-             GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-           run: |
-             python main.py
-   ```
-
-2. Add your secrets (API keys) under **Settings → Secrets and variables → Actions** in your GitHub repository.  
-3. GitHub will run this workflow daily at 17:00 UTC (adjust the cron as needed).
+I'm using GitHub Actions to run this script daily. You can edit the YAML file to suit your needs.
 
 ---
 
