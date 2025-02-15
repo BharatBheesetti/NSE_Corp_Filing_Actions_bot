@@ -30,3 +30,10 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
           python main.py
+      
+      - name: Upload CSV Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: downloaded-csv-files
+          path: data/
+

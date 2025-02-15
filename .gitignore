@@ -25,6 +25,10 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+#The browser-use gif and csv's generated
+*.gif
+*.csv
+
 # pytype static type analyzer
 .pytype/
 
