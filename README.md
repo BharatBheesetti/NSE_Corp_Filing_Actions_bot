@@ -93,6 +93,8 @@ A Python-based bot that automatically downloads corporate filing action data fro
 
 I'm using GitHub Actions to run this script daily. You can edit the YAML file to suit your needs.
 
+Note: I've actually not been able to get Github actions to get this to run successfully. Some issue with browser-use and pypi. YMMV.
+
 ---
 
 ## Contributing
