@@ -44,3 +44,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#Notes file - PRD
+notes.md
