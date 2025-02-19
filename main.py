@@ -106,7 +106,7 @@ async def main():
     csv_filename = os.path.join(DATA_DIR, f"nse_corporate_actions_{today.strftime('%Y%m%d')}.csv")
 
     # Configure Browser
-    browser_config = BrowserConfig(headless=False,
+    browser_config = BrowserConfig(headless=True,
                                    disable_security=True,
                                    new_context_config=BrowserContextConfig(
                         save_downloads_path="data/",
