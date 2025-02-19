@@ -16,15 +16,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-<<<<<<< HEAD
           python-version: '3.11'
 
       - name: Install dependencies
-=======
-          python-version: '3.10'
-          
-      - name: Install system dependencies
->>>>>>> 65998e08a4499f3007c7793778fc8c532c1c9008
         run: |
           sudo apt-get update
           sudo apt-get install -y git
